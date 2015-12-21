@@ -850,6 +850,18 @@ bool NuPlayer::Renderer::onDrainAudioQueue() {
     // immediately after start. Investigate error message
     // "vorbis_dsp_synthesis returned -135", along with RTSP.
     uint32_t numFramesPlayed;
+    if(!mAudioSink->ready() && !mAudioQueue.empty()) {
+        while (!mAudioQueue.empty()) {
+            QueueEntry *entry = &*mAudioQueue.begin();
+            if (entry->mBuffer == NULL) {
+                notifyEOS(true /* audio */, entry->mFinalResult);
+            }
+            mAudioQueue.erase(mAudioQueue.begin());
+            entry = NULL;
+        }
+        return false;
+    }
+
     if (mAudioSink->getPosition(&numFramesPlayed) != OK) {
         // When getPosition fails, renderer will not reschedule the draining
         // unless new samples are queued.
@@ -1250,6 +1262,30 @@ void NuPlayer::Renderer::onQueueBuffer(const sp<AMessage> &msg) {
 
     if (audio) {
         Mutex::Autolock autoLock(mLock);
+#if 1
+        sp<ABuffer> newBuffer;
+        status_t err = AVNuUtils::get()->convertToSinkFormatIfNeeded(
+                buffer, newBuffer,
+                (offloadingAudio() ? mCurrentOffloadInfo.format : mCurrentPcmInfo.mFormat),
+                offloadingAudio());
+        switch (err) {
+        case NO_INIT:
+            // passthru decoder pushes some buffers before the audio sink
+            // is opened. Since the offload format is known only when the sink
+            // is opened, pcm conversions cannot take place. So, retry.
+            ALOGI("init pending, retrying in 10ms, this shouldn't happen");
+            msg->post(10000LL);
+            return;
+        case OK:
+            break;
+        default:
+            ALOGW("error 0x%x in converting to sink format, drop buffer", err);
+            notifyConsumed->post();
+            return;
+        }
+        CHECK(newBuffer != NULL);
+        entry.mBuffer = newBuffer;
+#endif
         mAudioQueue.push_back(entry);
         postDrainAudioQueue_l();
     } else {
@@ -1737,8 +1773,10 @@ status_t NuPlayer::Renderer::onOpenAudioSink(
             onDisableOffloadAudio();
         } else {
             audioFormat = AVUtils::get()->updateAudioFormat(audioFormat, format);
-
             bitWidth = AVUtils::get()->getAudioSampleBits(format);
+            ALOGV("Mime \"%s\" mapped to audio_format 0x%x",
+                    mime.c_str(), audioFormat);
+
             int avgBitRate = -1;
             format->findInt32("bitrate", &avgBitRate);
 
@@ -1757,6 +1795,8 @@ status_t NuPlayer::Renderer::onOpenAudioSink(
                     ALOGV("Format is AAC ADTS\n");
                 }
             }
+
+            ALOGV("onOpenAudioSink: %s", format->debugString().c_str());
 
             int32_t offloadBufferSize =
                                     AVUtils::get()->getAudioMaxInputBufferSize(
@@ -1828,6 +1868,7 @@ status_t NuPlayer::Renderer::onOpenAudioSink(
             } else {
                 mUseAudioCallback = true;  // offload mode transfers data through callback
                 ++mAudioDrainGeneration;  // discard pending kWhatDrainAudioQueue message.
+                mFlags |= FLAG_OFFLOAD_AUDIO;
             }
         }
     }
@@ -1839,7 +1880,7 @@ status_t NuPlayer::Renderer::onOpenAudioSink(
         const PcmInfo info = {
                 (audio_channel_mask_t)channelMask,
                 (audio_output_flags_t)pcmFlags,
-                getPCMFormat(format),
+                AVNuUtils::get()->getPCMFormat(format),
                 numChannels,
                 sampleRate
         };
@@ -1874,7 +1915,7 @@ status_t NuPlayer::Renderer::onOpenAudioSink(
                     sampleRate,
                     numChannels,
                     (audio_channel_mask_t)channelMask,
-                    getPCMFormat(format),
+                    AVNuUtils::get()->getPCMFormat(format),
                     0 /* bufferCount - unused */,
                     mUseAudioCallback ? &NuPlayer::Renderer::AudioSinkCallback : NULL,
                     mUseAudioCallback ? this : NULL,

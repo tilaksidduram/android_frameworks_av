@@ -3778,7 +3778,7 @@ status_t ACodec::setupErrorCorrectionParameters() {
 
     errorCorrectionType.bEnableHEC = OMX_FALSE;
     errorCorrectionType.bEnableResync = OMX_TRUE;
-    errorCorrectionType.nResynchMarkerSpacing = 256;
+    errorCorrectionType.nResynchMarkerSpacing = 0;
     errorCorrectionType.bEnableDataPartitioning = OMX_FALSE;
     errorCorrectionType.bEnableRVLC = OMX_FALSE;
 
@@ -4566,16 +4566,13 @@ void ACodec::sendFormatChange(const sp<AMessage> &reply) {
                (mEncoderDelay || mEncoderPadding)) {
         int32_t channelCount;
         CHECK(notify->findInt32("channel-count", &channelCount));
-        size_t frameSize = channelCount * sizeof(int16_t);
         if (mSkipCutBuffer != NULL) {
             size_t prevbufsize = mSkipCutBuffer->size();
             if (prevbufsize != 0) {
                 ALOGW("Replacing SkipCutBuffer holding %zu bytes", prevbufsize);
             }
         }
-        mSkipCutBuffer = new SkipCutBuffer(
-                mEncoderDelay * frameSize,
-                mEncoderPadding * frameSize);
+        mSkipCutBuffer = new SkipCutBuffer(mEncoderDelay, mEncoderPadding, channelCount);
     }
 
     getVQZIPInfo(notify);
