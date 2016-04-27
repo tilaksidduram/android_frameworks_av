@@ -70,7 +70,7 @@ private:
 };
 
 struct NuPlayer::SeekAction : public Action {
-    SeekAction(int64_t seekTimeUs)
+    explicit SeekAction(int64_t seekTimeUs)
         : mSeekTimeUs(seekTimeUs) {
     }
 
@@ -85,7 +85,7 @@ private:
 };
 
 struct NuPlayer::ResumeDecoderAction : public Action {
-    ResumeDecoderAction(bool needNotify)
+    explicit ResumeDecoderAction(bool needNotify)
         : mNeedNotify(needNotify) {
     }
 
@@ -100,7 +100,7 @@ private:
 };
 
 struct NuPlayer::SetSurfaceAction : public Action {
-    SetSurfaceAction(const sp<Surface> &surface)
+    explicit SetSurfaceAction(const sp<Surface> &surface)
         : mSurface(surface) {
     }
 
@@ -149,7 +149,7 @@ private:
 };
 
 struct NuPlayer::PostMessageAction : public Action {
-    PostMessageAction(const sp<AMessage> &msg)
+    explicit PostMessageAction(const sp<AMessage> &msg)
         : mMessage(msg) {
     }
 
@@ -168,7 +168,7 @@ private:
 struct NuPlayer::SimpleAction : public Action {
     typedef void (NuPlayer::*ActionFunc)();
 
-    SimpleAction(ActionFunc func)
+    explicit SimpleAction(ActionFunc func)
         : mFunc(func) {
     }
 

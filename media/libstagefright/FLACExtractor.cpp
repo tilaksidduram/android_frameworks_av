@@ -77,7 +77,7 @@ class FLACParser : public RefBase {
 friend class FLACSource;
 
 public:
-    FLACParser(
+    explicit FLACParser(
         const sp<DataSource> &dataSource,
         // If metadata pointers aren't provided, we don't fill them
         const sp<MetaData> &fileMetadata = 0,

@@ -46,7 +46,7 @@ const int kDefaultSwVideoEncoderFormat = HAL_PIXEL_FORMAT_YCbCr_420_888;
 const int kDefaultSwVideoEncoderDataSpace = HAL_DATASPACE_BT709;
 
 struct MediaCodecSource::Puller : public AHandler {
-    Puller(const sp<MediaSource> &source);
+    explicit Puller(const sp<MediaSource> &source);
 
     status_t start(const sp<MetaData> &meta, const sp<AMessage> &notify);
     void stop();
