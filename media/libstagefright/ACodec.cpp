@@ -222,7 +222,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::BaseState : public AState {
-    explicit BaseState(ACodec *codec, const sp<AState> &parentState = NULL);
+    BaseState(ACodec *codec, const sp<AState> &parentState = NULL);
 
 protected:
     enum PortMode {
@@ -273,7 +273,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::DeathNotifier : public IBinder::DeathRecipient {
-    explicit DeathNotifier(const sp<AMessage> &notify)
+    DeathNotifier(const sp<AMessage> &notify)
         : mNotify(notify) {
     }
 
@@ -291,7 +291,7 @@ private:
 };
 
 struct ACodec::UninitializedState : public ACodec::BaseState {
-    explicit UninitializedState(ACodec *codec);
+    UninitializedState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -309,7 +309,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::LoadedState : public ACodec::BaseState {
-    explicit LoadedState(ACodec *codec);
+    LoadedState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -332,7 +332,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::LoadedToIdleState : public ACodec::BaseState {
-    explicit LoadedToIdleState(ACodec *codec);
+    LoadedToIdleState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -348,7 +348,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::IdleToExecutingState : public ACodec::BaseState {
-    explicit IdleToExecutingState(ACodec *codec);
+    IdleToExecutingState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -362,7 +362,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::ExecutingState : public ACodec::BaseState {
-    explicit ExecutingState(ACodec *codec);
+    ExecutingState(ACodec *codec);
 
     void submitRegularOutputBuffers();
     void submitOutputMetaBuffers();
@@ -392,7 +392,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::OutputPortSettingsChangedState : public ACodec::BaseState {
-    explicit OutputPortSettingsChangedState(ACodec *codec);
+    OutputPortSettingsChangedState(ACodec *codec);
 
 protected:
     virtual PortMode getPortMode(OMX_U32 portIndex);
@@ -409,7 +409,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::ExecutingToIdleState : public ACodec::BaseState {
-    explicit ExecutingToIdleState(ACodec *codec);
+    ExecutingToIdleState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -431,7 +431,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::IdleToLoadedState : public ACodec::BaseState {
-    explicit IdleToLoadedState(ACodec *codec);
+    IdleToLoadedState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);
@@ -446,7 +446,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 struct ACodec::FlushingState : public ACodec::BaseState {
-    explicit FlushingState(ACodec *codec);
+    FlushingState(ACodec *codec);
 
 protected:
     virtual bool onMessageReceived(const sp<AMessage> &msg);

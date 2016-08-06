@@ -36,7 +36,7 @@ enum {
 class BpEffect: public BpInterface<IEffect>
 {
 public:
-    explicit BpEffect(const sp<IBinder>& impl)
+    BpEffect(const sp<IBinder>& impl)
         : BpInterface<IEffect>(impl)
     {
     }

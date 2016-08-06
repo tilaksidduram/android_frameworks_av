@@ -75,7 +75,7 @@ enum {
 class BpMediaMetadataRetriever: public BpInterface<IMediaMetadataRetriever>
 {
 public:
-    explicit BpMediaMetadataRetriever(const sp<IBinder>& impl)
+    BpMediaMetadataRetriever(const sp<IBinder>& impl)
         : BpInterface<IMediaMetadataRetriever>(impl)
     {
     }

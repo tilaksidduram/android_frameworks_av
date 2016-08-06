@@ -47,7 +47,7 @@ enum {
 class BpAudioTrack : public BpInterface<IAudioTrack>
 {
 public:
-    explicit BpAudioTrack(const sp<IBinder>& impl)
+    BpAudioTrack(const sp<IBinder>& impl)
         : BpInterface<IAudioTrack>(impl)
     {
     }

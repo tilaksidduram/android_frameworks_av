@@ -35,8 +35,7 @@ enum {
 };
 
 struct BpDataSource : public BpInterface<IDataSource> {
-    explicit BpDataSource(const sp<IBinder>& impl)
-        : BpInterface<IDataSource>(impl) {}
+    BpDataSource(const sp<IBinder>& impl) : BpInterface<IDataSource>(impl) {}
 
     virtual sp<IMemory> getIMemory() {
         Parcel data, reply;

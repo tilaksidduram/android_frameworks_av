@@ -1669,7 +1669,7 @@ void WifiDisplaySource::disconnectClient2() {
 }
 
 struct WifiDisplaySource::HDCPObserver : public BnHDCPObserver {
-    explicit HDCPObserver(const sp<AMessage> &notify);
+    HDCPObserver(const sp<AMessage> &notify);
 
     virtual void notify(
             int msg, int ext1, int ext2, const Parcel *obj);

@@ -38,7 +38,7 @@
 namespace android {
 
 struct DataSourceReader : public mkvparser::IMkvReader {
-    explicit DataSourceReader(const sp<DataSource> &source)
+    DataSourceReader(const sp<DataSource> &source)
         : mSource(source) {
     }
 

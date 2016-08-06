@@ -35,7 +35,7 @@ enum {
 class BpDrmClient: public BpInterface<IDrmClient>
 {
 public:
-    explicit BpDrmClient(const sp<IBinder>& impl)
+    BpDrmClient(const sp<IBinder>& impl)
         : BpInterface<IDrmClient>(impl)
     {
     }

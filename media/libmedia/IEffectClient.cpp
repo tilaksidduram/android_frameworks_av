@@ -35,7 +35,7 @@ enum {
 class BpEffectClient: public BpInterface<IEffectClient>
 {
 public:
-    explicit BpEffectClient(const sp<IBinder>& impl)
+    BpEffectClient(const sp<IBinder>& impl)
         : BpInterface<IEffectClient>(impl)
     {
     }

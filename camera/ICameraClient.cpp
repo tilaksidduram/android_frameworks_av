@@ -33,7 +33,7 @@ enum {
 class BpCameraClient: public BpInterface<ICameraClient>
 {
 public:
-    explicit BpCameraClient(const sp<IBinder>& impl)
+    BpCameraClient(const sp<IBinder>& impl)
         : BpInterface<ICameraClient>(impl)
     {
     }

@@ -30,7 +30,7 @@ enum {
 class BpCameraRecordingProxyListener: public BpInterface<ICameraRecordingProxyListener>
 {
 public:
-    explicit BpCameraRecordingProxyListener(const sp<IBinder>& impl)
+    BpCameraRecordingProxyListener(const sp<IBinder>& impl)
         : BpInterface<ICameraRecordingProxyListener>(impl)
     {
     }

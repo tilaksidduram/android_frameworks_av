@@ -89,7 +89,7 @@ enum {
 class BpAudioFlinger : public BpInterface<IAudioFlinger>
 {
 public:
-    explicit BpAudioFlinger(const sp<IBinder>& impl)
+    BpAudioFlinger(const sp<IBinder>& impl)
         : BpInterface<IAudioFlinger>(impl)
     {
     }

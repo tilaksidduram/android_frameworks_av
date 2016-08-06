@@ -101,17 +101,17 @@ static void InitOMXParams(T *params) {
 namespace android {
 
 struct BufferMeta {
-    explicit BufferMeta(const sp<IMemory> &mem, bool is_backup = false)
+    BufferMeta(const sp<IMemory> &mem, bool is_backup = false)
         : mMem(mem),
           mIsBackup(is_backup) {
     }
 
-    explicit BufferMeta(size_t size)
+    BufferMeta(size_t size)
         : mSize(size),
           mIsBackup(false) {
     }
 
-    explicit BufferMeta(const sp<GraphicBuffer> &graphicBuffer)
+    BufferMeta(const sp<GraphicBuffer> &graphicBuffer)
         : mGraphicBuffer(graphicBuffer),
           mIsBackup(false) {
     }

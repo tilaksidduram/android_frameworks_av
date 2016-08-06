@@ -38,7 +38,7 @@ enum {
 };
 
 struct BpMediaHTTPConnection : public BpInterface<IMediaHTTPConnection> {
-    explicit BpMediaHTTPConnection(const sp<IBinder> &impl)
+    BpMediaHTTPConnection(const sp<IBinder> &impl)
         : BpInterface<IMediaHTTPConnection>(impl) {
     }
 

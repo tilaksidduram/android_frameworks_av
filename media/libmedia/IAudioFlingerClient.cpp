@@ -34,7 +34,7 @@ enum {
 class BpAudioFlingerClient : public BpInterface<IAudioFlingerClient>
 {
 public:
-    explicit BpAudioFlingerClient(const sp<IBinder>& impl)
+    BpAudioFlingerClient(const sp<IBinder>& impl)
         : BpInterface<IAudioFlingerClient>(impl)
     {
     }

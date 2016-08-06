@@ -30,7 +30,7 @@ enum {
 class BpMediaRecorderClient: public BpInterface<IMediaRecorderClient>
 {
 public:
-    explicit BpMediaRecorderClient(const sp<IBinder>& impl)
+    BpMediaRecorderClient(const sp<IBinder>& impl)
         : BpInterface<IMediaRecorderClient>(impl)
     {
     }

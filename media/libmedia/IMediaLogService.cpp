@@ -34,7 +34,7 @@ enum {
 class BpMediaLogService : public BpInterface<IMediaLogService>
 {
 public:
-    explicit BpMediaLogService(const sp<IBinder>& impl)
+    BpMediaLogService(const sp<IBinder>& impl)
         : BpInterface<IMediaLogService>(impl)
     {
     }

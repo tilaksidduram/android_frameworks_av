@@ -40,7 +40,7 @@ struct TimestampFinder : public RingBufferConsumer::RingBufferComparator {
         SELECT_NEITHER = 0,
     };
 
-    explicit TimestampFinder(nsecs_t timestamp) : mTimestamp(timestamp) {}
+    TimestampFinder(nsecs_t timestamp) : mTimestamp(timestamp) {}
     ~TimestampFinder() {}
 
     template <typename T>

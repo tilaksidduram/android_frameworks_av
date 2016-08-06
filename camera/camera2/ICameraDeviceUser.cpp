@@ -69,7 +69,7 @@ namespace {
 class BpCameraDeviceUser : public BpInterface<ICameraDeviceUser>
 {
 public:
-    explicit BpCameraDeviceUser(const sp<IBinder>& impl)
+    BpCameraDeviceUser(const sp<IBinder>& impl)
         : BpInterface<ICameraDeviceUser>(impl)
     {
     }

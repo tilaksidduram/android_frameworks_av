@@ -59,7 +59,7 @@ class CodecHandler: public AHandler {
 private:
     AMediaCodec* mCodec;
 public:
-    explicit CodecHandler(AMediaCodec *codec);
+    CodecHandler(AMediaCodec *codec);
     virtual void onMessageReceived(const sp<AMessage> &msg);
 };
 

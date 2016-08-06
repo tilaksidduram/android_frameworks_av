@@ -598,7 +598,7 @@ void SurfaceMediaSourceTest::fillYV12BufferRect(uint8_t* buf, int w,
 struct SimpleDummyRecorder {
         sp<MediaSource> mSource;
 
-        explicit SimpleDummyRecorder
+        SimpleDummyRecorder
                 (const sp<MediaSource> &source): mSource(source) {}
 
         status_t start() { return mSource->start();}

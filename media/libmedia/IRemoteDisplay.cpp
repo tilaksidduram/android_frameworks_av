@@ -30,7 +30,7 @@ enum {
 class BpRemoteDisplay: public BpInterface<IRemoteDisplay>
 {
 public:
-    explicit BpRemoteDisplay(const sp<IBinder>& impl)
+    BpRemoteDisplay(const sp<IBinder>& impl)
         : BpInterface<IRemoteDisplay>(impl)
     {
     }

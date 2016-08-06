@@ -403,7 +403,7 @@ static void playSource(OMXClient *client, sp<MediaSource> &source) {
 ////////////////////////////////////////////////////////////////////////////////
 
 struct DetectSyncSource : public MediaSource {
-    explicit DetectSyncSource(const sp<MediaSource> &source);
+    DetectSyncSource(const sp<MediaSource> &source);
 
     virtual status_t start(MetaData *params = NULL);
     virtual status_t stop();
